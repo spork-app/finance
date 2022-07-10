@@ -16,5 +16,12 @@
         "psr-4": {
             "Spork\\Finance\\": "src/"
         }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Spork\\Finance\\FinanceServiceProvider"
+            ]
+        }
     }
 }

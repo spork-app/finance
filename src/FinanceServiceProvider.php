@@ -30,10 +30,12 @@ class FinanceServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../database/migrations/' => database_path('migrations'),
         ], 'migrations');
-       $this->app->bind(PlaidServiceContract::class, PlaidService::class);
-        Spork::addFeature('finance', 'LibraryIcon', '/finance/dashboard');
-        Route::middleware('web')
-            ->prefix('finance')
-            ->group(__DIR__ . '/../routes/api.php');
+        $this->app->bind(PlaidServiceContract::class, PlaidService::class);
+        Spork::addFeature('finance', 'LibraryIcon', '/finance/dashboard', 'tool');
+        if (config('spork.finance.enabled')) {
+            Route::middleware('web')
+                ->prefix('finance')
+                ->group(__DIR__ . '/../routes/api.php');
+        }
     }
 }

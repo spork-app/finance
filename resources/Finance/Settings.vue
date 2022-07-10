@@ -98,7 +98,7 @@
                             Account associated with these transactions
                         </label>
                         <select v-model="account_id" id="account_selector" class="placeholder-gray-400 mt-1 block w-full py-2 px-3 border border-gray-300 dark:border-gray-500 bg-white dark:bg-gray-500 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-                            <optgroup v-for="token in $store.getters.features?.finance" :label="token.name">
+                            <optgroup v-for="token in ($store.getters.features?.finance ?? [])" :label="token.name">
                                 <option :value="null" disabled="true">Select an account</option>
                                 <option v-for="account in token.accounts" :key="account.id" :value="account.account_id">{{ account.name }} &mdash; {{account?.feature?.name}}</option>
                             </optgroup>
@@ -113,6 +113,14 @@
                 </HeaderMapping>
             </div>
         </div>
+        <div>
+            <conditions :open="open" :toggle="() => open = !open">
+
+                <div>
+                    <button @click="() => open = true">Add conditions</button>
+                </div>
+            </conditions>
+        </div>
     </div>
 </template>
 
@@ -120,7 +128,7 @@
     import {HomeIcon, PencilIcon, PhoneIcon, CloudIcon, TrashIcon, OfficeBuildingIcon} from "@heroicons/vue/outline";
 
     import HeaderMapping from "@components/HeaderMapping";
-    import LinkAccount from "@components/LinkAccount";
+    import LinkAccount from "./LinkAccount";
 
     export default {
         name: "Finance.Settings",
@@ -153,6 +161,7 @@
                 invert_values: false,
                 account_id: null,
                 link_id: null,
+                open: false,
             };
         },
         methods: {
