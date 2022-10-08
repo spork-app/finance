@@ -23,7 +23,7 @@ export default {
             try {
                 const { data } = await axios.get(buildUrl('/api/transaction', {
                     filter: {
-                        for_accounts: getters.allAccountsFromFeatures?.map(account => account.account_id),
+                        for_accounts: getters.allAccountsFromFeatures?.map(account => account.account_id).join('|'),
                     },
                     sort: '-date',
                     action: 'paginate:100'

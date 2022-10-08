@@ -8,6 +8,7 @@ Spork.routesFor('finance', [
         children: [
             Spork.authenticatedRoute('dashboard', require('./Finance/Dashboard').default),
             Spork.authenticatedRoute('bills', require('./Finance/Billing').default),
+            Spork.authenticatedRoute('groups', require('./Finance/Groups').default),
             Spork.authenticatedRoute('settings', require('./Finance/Settings').default),
         ]
     }),

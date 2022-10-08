@@ -1,15 +1,14 @@
 <template>
     <div class="flex flex-wrap mt-4">
         <div class="w-full py-2 px-4 text-2xl font-bold text-gray-800 dark:text-gray-200 flex items-center justify-between">
-            <span>Bills Dashboard</span>
+            <span>Budgets Dashboard</span>
             <span>
                 <feature-required feature="budgets" allow-more-than-one="true" />
             </span>
         </div>
         <div class="w-full pb-4 px-4 text-base font-base text-gray-500 dark:text-gray-300">Greetings! It's 2021-01-01. You should expect $420.20 to be withdrawn today.</div>
-        <!-- The billing information -->
+        <!-- The budgeting information -->
         <div class="w-full flex flex-wrap py-4 m-4 bg-white dark:bg-gray-600 rounded-lg shadow">
-            Balances
             <div class="w-full flex mx-4 rounded-full overflow-none bg-gray-200 my-2 text-white font-bold items-center">
                 <div  v-for="(account, i) in $store.getters.allAccountsFromFeatures" :key="account.account_id+'progress'" :style="'width: '+Math.max(1, ((account.balance ?? 0)/(balance ?? 1)) * 100)+'%; '+(i === 0 ? 'border-radius: 50px 0 0 50px;': '')+' background: #' + account.account_id.substr(0, 6)" class="p-4 text-center"></div>
 
@@ -20,7 +19,7 @@
                     <span  :style="'background: #' + account.account_id.substr(0, 6)" class="p-2 w-4 h-4 rounded-full"></span>{{account.name}} (${{ account.balance ?? 0 }}/{{account.available ?? 0}})
                 </div>
                 
-                <div class="flex items-center gap-2"><span class="bg-yellow-500 p-2 w-4 h-4 rounded-full"></span>Reserved for bills/savings (${{ reservedAmount }})</div>
+                <div class="flex items-center gap-2"><span class="bg-yellow-500 p-2 w-4 h-4 rounded-full"></span>Reserved for budgets/savings (${{ reservedAmount }})</div>
             </div>
         </div>
         
@@ -42,9 +41,9 @@
         </div>
 
         <div class="w-1/3">
-            <div class="m-4 text-xl font-medium">Paid bills</div>
+            <div class="m-4 text-xl font-medium">Paid Bills</div>
             <div class="bg-white dark:bg-gray-600 shadow overflow-hidden sm:rounded-md m-4 px-4 py-2 flex flex-col max-h-4xl divide-y divide-gray-200 items-center">
-                <div class="flex w-full items-center gap-2" v-for="transaction in paidBills" :key="transaction">
+                <div class="flex w-full items-center gap-2" v-for="transaction in paidBudgets" :key="transaction">
                     <div class="w-8">
                         <check-icon class="text-green-500 fill-current"></check-icon>
                     </div>  
@@ -62,15 +61,15 @@
                     </div>
                 </div>
 
-                <div v-if="paidBills.length === 0">
-                    <div class="text-center text-gray-500 dark:text-gray-300">No paid bills</div>
+                <div v-if="paidBudgets.length === 0">
+                    <div class="text-center text-gray-500 dark:text-gray-300">No paid budgets</div>
                 </div>
             </div>
         </div>
         <div class="w-1/3">
-            <div class="m-4 text-xl font-medium">Pending bills</div>
+            <div class="m-4 text-xl font-medium">Pending Bills</div>
             <div class="bg-white dark:bg-gray-600 shadow overflow-hidden sm:rounded-md m-4 px-4 py-2 flex flex-col max-h-4xl divide-y divide-gray-200 items-center">
-                <div class="flex w-full items-center gap-2" v-for="transaction in pendingBills" :key="transaction">
+                <div class="flex w-full items-center gap-2" v-for="transaction in pendingBudgets" :key="transaction">
                     <div class="w-8">
                         <refresh-icon class="text-yellow-500 fill-current"></refresh-icon>
                     </div>  
@@ -87,15 +86,15 @@
                         </div>
                     </div>
                 </div>
-                <div v-if="pendingBills.length === 0">
-                    <div class="text-center text-gray-500 dark:text-gray-300">No pending bills</div>
+                <div v-if="pendingBudgets.length === 0">
+                    <div class="text-center text-gray-500 dark:text-gray-300">No pending budgets</div>
                 </div>
             </div>
         </div>
         <div class="w-1/3">
             <div class="m-4 text-xl font-medium">Future Bills</div>
             <div class="bg-white dark:bg-gray-600 shadow overflow-hidden sm:rounded-md m-4 px-4 py-2 flex flex-col max-h-4xl divide-y divide-gray-200 items-center">
-               <div class="flex w-full items-center gap-2" v-for="transaction in futureBills" :key="transaction">
+               <div class="flex w-full items-center gap-2" v-for="transaction in futureBudgets" :key="transaction">
                     <div class="w-8">
                         <clock-icon class="text-yellow-600 fill-current"></clock-icon>
                     </div>
@@ -112,8 +111,8 @@
                         </div>
                     </div>
                 </div>
-                <div v-if="futureBills.length === 0">
-                    <div class="text-center text-gray-500 dark:text-gray-300">No future bills</div>
+                <div v-if="futureBudgets.length === 0">
+                    <div class="text-center text-gray-500 dark:text-gray-300">No future budgets</div>
                 </div>
             </div>
         </div>
@@ -151,30 +150,30 @@ export default {
         }
     },
     methods: {
-        transactionIsInBills(transaction) {
-            return this.bills.map(bill => bill.name).includes(transaction.name)
+        transactionIsInBudgets(transaction) {
+            return this.budgets.map(budget => budget.name).includes(transaction.name)
         },
-        billInTransactions(bill) {
-            return this.transactions.filter(transaction => transaction.name === bill.name).length > 0
+        budgetInTransactions(budget) {
+            return this.transactions.filter(transaction => transaction.name === budget.name).length > 0
         },
     },
     computed: {
-        // Paid bills
-        paidBills() {
-            return this.transactions.filter(transaction => this.transactionIsInBills(transaction) && !transaction.pending)
+        // Paid budgets
+        paidBudgets() {
+            return this.transactions.filter(transaction => this.transactionIsInBudgets(transaction) && !transaction.pending)
         },
-        // Bills that are past due, but not paid or pending
-        pendingBills() {
-            return this.transactions.filter(transaction => this.transactionIsInBills(transaction) && transaction.pending);
+        // Budgets that are past due, but not paid or pending
+        pendingBudgets() {
+            return this.transactions.filter(transaction => this.transactionIsInBudgets(transaction) && transaction.pending);
         },
-        futureBills() {
-            return this.bills.filter(bill => !this.billInTransactions(bill));
+        futureBudgets() {
+            return this.budgets.filter(budget => !this.budgetInTransactions(budget));
         },
         paidAmount() {
-            return this.paidBills.map(transaction => transaction.amount).reduce((a, b) => a + b, 0);
+            return this.paidBudgets.map(transaction => transaction.amount).reduce((a, b) => a + b, 0);
         },
         reservedAmount() {
-            return this.pendingBills.map(transaction => transaction.amount ?? 0).reduce((a, b) => Number(a) + Number(b), 0) + this.futureBills.map(bill => bill.settings?.amount ?? 0).reduce((a, b) => Number(a) + Number(b), 0);
+            return this.pendingBudgets.map(transaction => transaction.amount ?? 0).reduce((a, b) => Number(a) + Number(b), 0) + this.futureBudgets.map(budget => budget.settings?.amount ?? 0).reduce((a, b) => Number(a) + Number(b), 0);
         },
         availableAmount() {
             return this.$store.getters.allAccountsFromFeatures.map(account => account.available ?? 0).reduce((sum, amount) => sum + amount, 0);
@@ -185,11 +184,11 @@ export default {
         stats() {
             return [
                 { id: 1, name: 'Total Balance', stat: '$'+Number(this.balance).toLocaleString(), icon: UsersIcon },
-                { id: 2, name: 'Bills that need to be paid', stat: '$' + this.reservedAmount, icon: MailOpenIcon },
+                { id: 2, name: 'Budgets that need to be paid', stat: '$' + this.reservedAmount, icon: MailOpenIcon },
                 { id: 3, name: 'Available to spend', stat: '$'+Number(this.availableAmount).toLocaleString(), icon: CursorClickIcon },
             ];
         },
-        bills() {
+        budgets() {
             return this.$store.getters.features.budgets;
         },
         transactions() {

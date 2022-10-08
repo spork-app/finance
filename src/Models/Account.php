@@ -2,11 +2,11 @@
 
 namespace Spork\Finance\Models;
 
-use App\Models\AbstractModel;
 use App\Models\FeatureList;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Kregel\LaravelAbstract\AbstractModelTrait;
+use Spork\Core\Models\AbstractModel;
 
 class Account extends AbstractModel
 {

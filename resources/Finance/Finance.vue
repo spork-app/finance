@@ -8,8 +8,8 @@
 </template>
 
 <script>
-    import DualMenuPanel from "@components/DualMenuPanel";
-    import {HomeIcon, PencilIcon, DocumentAddIcon, CogIcon } from "@heroicons/vue/outline";
+    import DualMenuPanel from "@core/components/DualMenuPanel";
+    import {HomeIcon, TagIcon, DocumentAddIcon, CogIcon } from "@heroicons/vue/outline";
 
     export default {
         name: "Finance",
@@ -30,6 +30,12 @@
                         name: 'Bills',
                         href: '/finance/bills',
                         icon: DocumentAddIcon,
+                        current: false,
+                    },
+                    {
+                        name: 'Groups',
+                        href: '/finance/groups',
+                        icon: TagIcon,
                         current: false,
                     },
                     {

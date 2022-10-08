@@ -74,7 +74,7 @@
 
         <div class="hidden sm:block" aria-hidden="true">
             <div class="py-5">
-                <div class="border-t border-gray-200" />
+                <div class="border-t border-gray-200 dark:border-gray-600" />
             </div>
         </div>
         <div class="md:grid md:grid-cols-3 md:gap-6">
@@ -112,14 +112,6 @@
 
                 </HeaderMapping>
             </div>
-        </div>
-        <div>
-            <conditions :open="open" :toggle="() => open = !open">
-
-                <div>
-                    <button @click="() => open = true">Add conditions</button>
-                </div>
-            </conditions>
         </div>
     </div>
 </template>
