@@ -2,7 +2,7 @@
 
 namespace Spork\Finance\Jobs;
 
-use App\Models\FeatureList;
+use Spork\Core\Models\FeatureList;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
 class ResetBudgetsAtTheStartOfThePeriodJob implements ShouldQueue
@@ -10,7 +10,7 @@ class ResetBudgetsAtTheStartOfThePeriodJob implements ShouldQueue
     public function handle()
     {
         // Bill 
-        $budgets = FeatureList::forFeature(FeatureList::FEATURE_BUDGETS)
+        $budgets = FeatureList::forFeature('budgets')
         // Schedule
             ->with('repeatables')
             ->get();

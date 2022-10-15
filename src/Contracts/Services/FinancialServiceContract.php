@@ -1,7 +1,7 @@
 <?php
 namespace Spork\Finance\Contracts\Services;
 
-use App\Models\FeatureList;
+use Spork\Core\Models\FeatureList;
 use Carbon\Carbon;
 
 interface FinancialServiceContract

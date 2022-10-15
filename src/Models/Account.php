@@ -2,7 +2,7 @@
 
 namespace Spork\Finance\Models;
 
-use App\Models\FeatureList;
+use Spork\Core\Models\FeatureList;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Kregel\LaravelAbstract\AbstractModelTrait;

@@ -2,7 +2,7 @@
 
 namespace Spork\Finance\Jobs;
 
-use App\Models\FeatureList;
+use Spork\Core\Models\FeatureList;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\SerializesModels;
@@ -17,9 +17,9 @@ class RequestRefreshAllAccountsJob
      *
      * @return void
      */
-    public function __construct()
+    public function handle()
     {
-        $features = FeatureList::forFeature(FeatureList::FEATURE_FINANCE)->get();
+        $features = FeatureList::forFeature('finance')->get();
 
         $features->each(function ($feature) {
             event(new AccountUpdateRequested($feature));

@@ -2,7 +2,7 @@
 
 namespace Spork\Finance\Listeners;
 
-use App\Models\FeatureList;
+use Spork\Core\Models\FeatureList;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
@@ -17,7 +17,7 @@ class SyncTransactionsForAccessTokenListener implements ShouldQueue
     {
         $featureList = $event->getFeatureList();
 
-        if ($featureList->feature !== FeatureList::FEATURE_FINANCE) {
+        if ($featureList->feature !== 'finance') {
             return false;
         }
 

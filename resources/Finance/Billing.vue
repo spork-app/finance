@@ -167,7 +167,7 @@ export default {
             return this.transactions.filter(transaction => this.transactionIsInBudgets(transaction) && transaction.pending);
         },
         futureBudgets() {
-            return this.budgets.filter(budget => !this.budgetInTransactions(budget));
+            return this.budgets?.filter(budget => !this.budgetInTransactions(budget)) ?? [];
         },
         paidAmount() {
             return this.paidBudgets.map(transaction => transaction.amount).reduce((a, b) => a + b, 0);

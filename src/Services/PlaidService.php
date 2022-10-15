@@ -2,7 +2,7 @@
 
 namespace Spork\Finance\Services;
 
-use App\Models\FeatureList;
+use Spork\Core\Models\FeatureList;
 use Spork\Finance\Contracts\Services\PlaidServiceContract;
 use Spork\Finance\Models\Account;
 use Carbon\Carbon;

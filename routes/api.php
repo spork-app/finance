@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Models\FeatureList;
+use Spork\Core\Models\FeatureList;
 use Spork\Finance\Contracts\Services\PlaidServiceContract;
 use Spork\Finance\Events\BankLinkedEvent;
 use Spork\Finance\Models\Account;
@@ -143,7 +143,7 @@ Route::middleware('auth:sanctum')->post('/plaid/exchange-token', function(PlaidS
 
     return FeatureList::create([
         'name' => $response->access_token,
-        'feature' => FeatureList::FEATURE_FINANCE,
+        'feature' => 'finance',
         'user_id' => auth()->user()->id,
         'settings' => [
             'access_token' => $response->access_token,

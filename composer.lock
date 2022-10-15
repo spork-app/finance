@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "46bfca979ff1be83d3f97c8a21cb5dc8",
+    "content-hash": "2598e5384d09ee362f3041e6d53093e1",
     "packages": [
         {
             "name": "nimbly/capsule",
@@ -85,12 +85,12 @@
             },
             "type": "library",
             "autoload": {
-                "psr-4": {
-                    "Shuttle\\": "src/"
-                },
                 "files": [
                     "src/functions.php"
-                ]
+                ],
+                "psr-4": {
+                    "Shuttle\\": "src/"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -279,23 +279,23 @@
         },
         {
             "name": "tomorrow-ideas/plaid-sdk-php",
-            "version": "1.0.6",
+            "version": "1.0.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/TomorrowIdeas/plaid-sdk-php.git",
-                "reference": "bfc48c2cd0080bbd86e67d05dc6a9bc128c1017b"
+                "reference": "6aa0476fe827237528eb862493dcfad7b005fc28"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/TomorrowIdeas/plaid-sdk-php/zipball/bfc48c2cd0080bbd86e67d05dc6a9bc128c1017b",
-                "reference": "bfc48c2cd0080bbd86e67d05dc6a9bc128c1017b",
+                "url": "https://api.github.com/repos/TomorrowIdeas/plaid-sdk-php/zipball/6aa0476fe827237528eb862493dcfad7b005fc28",
+                "reference": "6aa0476fe827237528eb862493dcfad7b005fc28",
                 "shasum": ""
             },
             "require": {
                 "ext-curl": "*",
                 "ext-json": "*",
                 "nimbly/shuttle": "^0.4",
-                "php": ">=7.3|^8.0"
+                "php": ">=7.3|>=8.0"
             },
             "require-dev": {
                 "php-coveralls/php-coveralls": "^2.1",
@@ -316,7 +316,7 @@
             "authors": [
                 {
                     "name": "Brent Scheffler",
-                    "email": "brent@tomorrow.me"
+                    "email": "brent@brentscheffler.com"
                 }
             ],
             "description": "PHP implementation of Plaid's API as an SDK.",
@@ -327,9 +327,9 @@
             ],
             "support": {
                 "issues": "https://github.com/TomorrowIdeas/plaid-sdk-php/issues",
-                "source": "https://github.com/TomorrowIdeas/plaid-sdk-php/tree/1.0.6"
+                "source": "https://github.com/TomorrowIdeas/plaid-sdk-php/tree/1.0.9"
             },
-            "time": "2021-10-12T17:41:11+00:00"
+            "time": "2022-07-07T18:57:27+00:00"
         }
     ],
     "packages-dev": [],
@@ -340,5 +340,5 @@
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "2.3.0"
 }
