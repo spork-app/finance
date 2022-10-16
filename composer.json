@@ -37,7 +37,7 @@
         "test": "vendor/bin/phpunit",
         "format": "vendor/bin/pint"
     },
-    "homepage": "https://github.com/spork-app/development",
+    "homepage": "https://github.com/spork-app/finance",
     "keywords": [
         "spork-plugins"
     ],
