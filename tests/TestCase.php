@@ -4,7 +4,7 @@ namespace Spork\Finance\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as TestbenchTestCase;
-use Spork\Finance\FinanceServiceProvider.php;
+use Spork\Finance\FinanceServiceProvider;
 
 class TestCase extends TestbenchTestCase
 {
@@ -20,7 +20,7 @@ class TestCase extends TestbenchTestCase
     protected function getPackageProviders($app)
     {
         return [
-            FinanceServiceProvider.php::class,
+            FinanceServiceProvider::class,
         ];
     }
 }
