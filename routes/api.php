@@ -4,7 +4,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Spork\Core\Models\FeatureList;
 use Spork\Finance\Contracts\Services\PlaidServiceContract;
-use Spork\Finance\Events\BankLinkedEvent;
 use Spork\Finance\Models\Account;
 
 Route::middleware('auth:sanctum')->post('upload-accounts', function (Request $request) {
@@ -14,17 +13,18 @@ Route::middleware('auth:sanctum')->post('upload-accounts', function (Request $re
     $file = fopen(storage_path('app/'.$filePath), 'r');
     $line = 0;
     $headers = [];
-    $accounts = [] ;
+    $accounts = [];
     try {
-        while (!feof($file)) {
+        while (! feof($file)) {
             $row = fgetcsv($file);
             if ($line === 0) {
                 $line++;
                 $headers = $row;
+
                 continue;
             }
 
-            if (empty ($headers)) {
+            if (empty($headers)) {
                 continue;
             }
 
@@ -39,13 +39,11 @@ Route::middleware('auth:sanctum')->post('upload-accounts', function (Request $re
             $accounts[] = Account::create($modelFillable);
         }
     } finally {
-
         fclose($file);
         unlink(storage_path('app/'.$filePath));
     }
 
     return $accounts ?? [];
-
 });
 Route::middleware('auth:sanctum')->post('upload-transactions', function (Request $request) {
     request()->validate([
@@ -57,18 +55,19 @@ Route::middleware('auth:sanctum')->post('upload-transactions', function (Request
     $file = fopen(storage_path('app/'.$filePath), 'r');
     $line = 0;
     $headers = [];
-    $transactions = [] ;
+    $transactions = [];
     $row = null;
     try {
-        while (!feof($file)) {
+        while (! feof($file)) {
             $row = fgetcsv($file);
             if ($line === 0) {
                 $line++;
                 $headers = $row;
+
                 continue;
             }
 
-            if (empty ($headers) || empty($row)) {
+            if (empty($headers) || empty($row)) {
                 continue;
             }
 
@@ -91,29 +90,29 @@ Route::middleware('auth:sanctum')->post('upload-transactions', function (Request
                 'date' => 'required_if:transaction_id,null|date',
                 'pending' => 'boolean|in:posted,pending',
                 'type' => 'string',
-                'transaction_id' => 'string'
+                'transaction_id' => 'string',
             ], $modelFillable);
 
             if (empty($modelFillable['transaction_id'])) {
                 $modelFillable['transaction_id'] = md5(sprintf('%s.%s.%s', $modelFillable['name'], $modelFillable['amount'], $modelFillable['date']));
             }
 
-            if (!is_bool($modelFillable['pending'])) {
+            if (! is_bool($modelFillable['pending'])) {
                 $modelFillable['pending'] = $modelFillable['pending'] === 'pending';
             }
-            if (!empty($modelFillable['date'])) {
+            if (! empty($modelFillable['date'])) {
                 $modelFillable['date'] = \Carbon\Carbon::parse($modelFillable['date']);
             }
 
-            if (!empty($modelFillable['amount'])) {
+            if (! empty($modelFillable['amount'])) {
                 $modelFillable['amount'] = stripos($modelFillable['amount'], '--') !== false ? trim($modelFillable['amount'], '-') : $modelFillable['amount'];
             }
-            if (!empty(request('account_id'))) {
+            if (! empty(request('account_id'))) {
                 $modelFillable['account_id'] = request('account_id');
             }
 
             if (request()->get('invert_values')) {
-                $modelFillable['amount'] = $modelFillable['amount'] > 0 ?  -abs($modelFillable['amount']) : abs($modelFillable['amount']);
+                $modelFillable['amount'] = $modelFillable['amount'] > 0 ? -abs($modelFillable['amount']) : abs($modelFillable['amount']);
             }
 
             $transaction = \App\Finance\Models\Transaction::firstWhere('transaction_id', $modelFillable['transaction_id']);
@@ -127,18 +126,16 @@ Route::middleware('auth:sanctum')->post('upload-transactions', function (Request
     } catch (\Throwable $e) {
         dd($e, $row, $headers);
     } finally {
-
         fclose($file);
         unlink(storage_path('app/'.$filePath));
     }
 
     return $accounts ?? [];
-
 });
 
-Route::middleware('auth:sanctum')->delete('account/{account}', fn(Account $account) => $account->delete());
+Route::middleware('auth:sanctum')->delete('account/{account}', fn (Account $account) => $account->delete());
 Route::middleware('auth:sanctum')->post('/plaid/create-link-token', fn (PlaidServiceContract $service) => response()->json($service->createLinkToken()));
-Route::middleware('auth:sanctum')->post('/plaid/exchange-token', function(PlaidServiceContract $service) {
+Route::middleware('auth:sanctum')->post('/plaid/exchange-token', function (PlaidServiceContract $service) {
     $response = $service->exchangeLinkTokenForAccessToken(request()->get('public_token'));
 
     return FeatureList::create([
@@ -149,8 +146,8 @@ Route::middleware('auth:sanctum')->post('/plaid/exchange-token', function(PlaidS
             'access_token' => $response->access_token,
             'item_id' => $response->item_id,
             'institution_id' => request()->get('institution'),
-        ]
-    ]);    
+        ],
+    ]);
 });
 
 Route::post('plaid/webhook', fn () => info(request()->all()));

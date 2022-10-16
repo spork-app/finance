@@ -1,7 +1,7 @@
 <?php
+
 namespace Spork\Finance\Contracts\Services;
 
-interface PlaidServiceContract extends FinancialServiceContract 
+interface PlaidServiceContract extends FinancialServiceContract
 {
-    
 }

@@ -2,22 +2,23 @@
 
 namespace Spork\Finance\Services;
 
+use Carbon\Carbon;
 use Spork\Core\Models\FeatureList;
 use Spork\Finance\Contracts\Services\PlaidServiceContract;
 use Spork\Finance\Models\Account;
-use Carbon\Carbon;
-use Spork\Finance\Events\AccountsUpdateEvent;
 use TomorrowIdeas\Plaid\Entities\User;
 use TomorrowIdeas\Plaid\Plaid;
 
 class PlaidService implements PlaidServiceContract
 {
-    protected Plaid $service ;
-    public function __construct() {
+    protected Plaid $service;
+
+    public function __construct()
+    {
         $this->service = new Plaid(
-            env("PLAID_CLIENT_ID"),
-            env("PLAID_CLIENT_SECRET"),
-            env("PLAID_ENVIRONMENT")
+            env('PLAID_CLIENT_ID'),
+            env('PLAID_CLIENT_SECRET'),
+            env('PLAID_ENVIRONMENT')
         );
     }
 
@@ -45,7 +46,6 @@ class PlaidService implements PlaidServiceContract
 
         $accounts = [];
         foreach ($transactions->accounts as $account) {
-
             $acct = $token->accounts()->where('account_id', $account->account_id)->first();
 
             if (empty($acct)) {
@@ -109,6 +109,7 @@ class PlaidService implements PlaidServiceContract
     public function getAccounts(FeatureList $accessToken): array
     {
         $accessToken = $accessToken->settings->access_token;
+
         return [];
     }
 }

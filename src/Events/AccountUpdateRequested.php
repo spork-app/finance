@@ -2,20 +2,20 @@
 
 namespace Spork\Finance\Events;
 
-use Spork\Core\Models\FeatureList;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use Spork\Core\Models\FeatureList;
 
 class AccountUpdateRequested
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public function __construct (
+    public function __construct(
         public FeatureList $featureList
-    ) { }
+    ) {
+    }
 
     public function broadcastOn()
     {

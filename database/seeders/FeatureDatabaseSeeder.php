@@ -18,9 +18,9 @@ class FeatureDatabaseSeeder extends Seeder
         FeatureList::factory()->create([
             'feature' => 'Finance',
             'settings' => [
-                
+
             ],
-            'name' => 'Finance Feature'
+            'name' => 'Finance Feature',
         ]);
     }
 }

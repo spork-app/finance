@@ -2,10 +2,10 @@
 
 namespace Spork\Finance\Jobs;
 
-use Spork\Core\Models\FeatureList;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use Spork\Core\Models\FeatureList;
 use Spork\Finance\Events\AccountUpdateRequested;
 
 class RequestRefreshAllAccountsJob

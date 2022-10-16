@@ -2,14 +2,14 @@
 
 namespace Spork\Finance\Jobs;
 
-use Spork\Core\Models\FeatureList;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Spork\Core\Models\FeatureList;
 
 class ResetBudgetsAtTheStartOfThePeriodJob implements ShouldQueue
 {
     public function handle()
     {
-        // Bill 
+        // Bill
         $budgets = FeatureList::forFeature('budgets')
         // Schedule
             ->with('repeatables')
@@ -21,7 +21,7 @@ class ResetBudgetsAtTheStartOfThePeriodJob implements ShouldQueue
             $budget->settings->total_spend = 0.0;
             $budget->settings->paid = false;
             $budget->settings->exceeded_spends_at = null;
-            
+
             $budget->save();
         }
     }

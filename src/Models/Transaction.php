@@ -4,8 +4,6 @@ namespace Spork\Finance\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Collection;
 use Kregel\LaravelAbstract\AbstractModelTrait;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spork\Core\Models\AbstractModel;
@@ -34,20 +32,21 @@ class Transaction extends AbstractModel
     public function scopeForAccounts(Builder $query, $value)
     {
         $query->with('account');
+
         return $query->whereIn('account_id', explode('|', $value));
     }
 
     public function getAbstractAllowedFilters(): array
     {
         return [
-            AllowedFilter::scope('for_accounts')
+            AllowedFilter::scope('for_accounts'),
         ];
     }
 
     public function getAbstractAllowedSorts(): array
     {
         return [
-            'date'
+            'date',
         ];
     }
 

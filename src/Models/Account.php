@@ -2,11 +2,10 @@
 
 namespace Spork\Finance\Models;
 
-use Spork\Core\Models\FeatureList;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Kregel\LaravelAbstract\AbstractModelTrait;
 use Spork\Core\Models\AbstractModel;
+use Spork\Core\Models\FeatureList;
 
 class Account extends AbstractModel
 {
@@ -30,7 +29,7 @@ class Account extends AbstractModel
 
         static::creating(function ($item) {
             if (empty($item->account_id)) {
-                $item->account_id = md5($item->name . $item->type);
+                $item->account_id = md5($item->name.$item->type);
             }
         });
     }
