@@ -29,14 +29,13 @@ class FinanceServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->publishes([
-            __DIR__.'/../database/migrations/' => database_path('migrations'),
-        ], 'migrations');
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         $this->app->bind(PlaidServiceContract::class, PlaidService::class);
         Spork::addFeature('finance', 'LibraryIcon', '/finance/dashboard', 'tool', ['finance', 'financeGroup', 'bill']);
 
         FeatureList::extend('accounts', fn () => $this->hasMany(Account::class));
         Spork::loadWith(['accounts']);
+        $this->mergeConfigFrom(__DIR__ . '/../config/spork.php', 'spork.finance');
 
         if (config('spork.finance.enabled')) {
             Route::middleware('web')
